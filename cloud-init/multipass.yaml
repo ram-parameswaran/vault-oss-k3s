@@ -1,5 +1,4 @@
 runcmd:
-  # INSTALL_K3S_VERSION=v1.24.7+k3s1 for Consul-K8S <=0.49.0 compatibility
   - curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.24.7+k3s1 sh -
   - mkdir -p /home/ubuntu/.kube/
   - cp /etc/rancher/k3s/k3s.yaml /home/ubuntu/.kube/config
@@ -20,3 +19,40 @@ runcmd:
   - kubectl completion bash > /etc/bash_completion.d/kubectl
   - curl -sL "https://releases.hashicorp.com/vault-k8s/1.1.0/vault-k8s_1.1.0_linux_$( [ $(uname -m) = aarch64 ] && echo arm64 || echo amd64).zip" | zcat > /usr/local/bin/vault-k8s
   - chmod +x /usr/local/bin/vault-k8s
+
+write_files:
+- path: /home/ubuntu/vault-overrides.yaml
+  content: |
+    server:
+      image:
+        repository: hashicorp/vault-enterprise
+        tag: 1.12.1-ent
+      enterpriseLicense:
+        secretName: vault-ent-license
+      affinity: ""
+      ha:
+        enabled: true
+        replicas: 1
+        apiAddr: null
+        clusterAddr: null
+
+        raft:
+          enabled: true
+          setNodeId: true
+    ui:
+      enabled: true
+      publishNotReadyAddresses: true
+      activeVaultPodOnly: false
+      serviceType: "LoadBalancer"
+      serviceNodePort: null
+      externalPort: 8200
+      targetPort: 8200
+  owner: 'ubuntu:ubuntu'
+  permissions: '0400'
+  defer: true
+- path: /home/ubuntu/license.hclic
+  content: |
+    <license here>
+  owner: 'ubuntu:ubuntu'
+  permissions: '0400'
+  defer: true

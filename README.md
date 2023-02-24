@@ -57,9 +57,20 @@ k exec v-vault-0 -- vault operator init \
 
 Cleanup steps here
 
+`multipass delete <vm name>`
+
+`multipass purge`
+
 ## Notes
 
 K3s uses `sqlite` for storage instead of `etcd`, and also lacks other core features out of the box. This can all be configured if needed.
 
+## Troubleshooting
 
+#### Multipass not deleting machine after delete & purge
+
+`multipass stop`
+`multipass list`
+`multipass delete <vm name> --purge`
+`multipass list`
 
