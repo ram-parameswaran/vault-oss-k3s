@@ -21,7 +21,6 @@ ui:
 
   enabled: true
   publishNotReadyAddresses: true
-  # The service should only contain selectors for active Vault pod
   activeVaultPodOnly: false
   serviceType: "LoadBalancer"
   serviceNodePort: null
