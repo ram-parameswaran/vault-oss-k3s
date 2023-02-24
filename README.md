@@ -18,6 +18,8 @@ It also doesn't hurt to have [kubectl](https://kubernetes.io/docs/reference/kube
 
 ## Getting started
 
+`multipass launch -n <vm name> -m 4G -c 2 -d 10GB --cloud-init cloud-init/multipass.yaml`
+
 etc etc etc, to modify later
 
 
