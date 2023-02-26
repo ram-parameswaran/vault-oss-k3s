@@ -41,7 +41,7 @@ Copy the overrides.yaml to the VM
 `helm install vault hashicorp/vault --values vault-overrides.yaml`
 
 ```
-k exec v-vault-0 -- vault operator init \
+k exec vault-0 -- vault operator init \
     -key-shares=1 \
     -key-threshold=1 \
     -format=json > cluster-keys.json
