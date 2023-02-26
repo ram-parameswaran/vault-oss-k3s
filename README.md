@@ -36,10 +36,9 @@ Details of how the repo functions go here
 
 Copy the overrides.yaml to the VM
 
-`secret=$(cat license.hclic)`
-`k create secret generic vault-ent-license --from-literal="license=${secret}"`
+`secret=$(cat license.hclic); k create secret generic vault-ent-license --from-literal="license=${secret}"`
 
-`helm install vault hashicorp/vault --values overrides.yaml`
+`helm install vault hashicorp/vault --values vault-overrides.yaml`
 
 ```
 k exec v-vault-0 -- vault operator init \
