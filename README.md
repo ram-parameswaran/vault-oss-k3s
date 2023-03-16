@@ -6,6 +6,10 @@ Most of this is just taken & pieced together from various guides I've found on t
 
 ## Why Multipass & k3s?
 
+https://multipass.run/docs/installing-on-macos
+
+- Multipass uses Hyperkit on the Intel chips and qemu on the M1's
+
 Due to compatibility limitations on the Mac M1 chips I feel most common solutions for setting up customer reproductions fell short or felt clunky in some way, which can be inhibiting, especially while attempting to learn Kubernetes and not being able to troubleshoot it effectively.
 
 I found this setup to be the most straight forward method for spinning up multiple Vault clusters with Kubernetes and being able to access each via an IP address.
