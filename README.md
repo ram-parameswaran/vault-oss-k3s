@@ -1,4 +1,4 @@
-saving here for now
+saving here for now, WIP
 
 # Vault with K3S & Multipass
 
@@ -8,7 +8,7 @@ Most of this is just taken & pieced together from various guides I've found on t
 
 https://multipass.run/docs/installing-on-macos
 
-- Multipass uses Hyperkit on the Intel chips and qemu on the M1's
+- Multipass uses Hyperkit on the Intel chips and qemu on the M1's as its back-end
 
 Due to compatibility limitations on the Mac M1 chips I feel most common solutions for setting up customer reproductions fell short or felt clunky in some way, which can be inhibiting, especially while attempting to learn Kubernetes and not being able to troubleshoot it effectively.
 
