@@ -2,7 +2,7 @@ saving here for now, WIP
 .
 # Vault with K3S & Multipass
 
-Most of this is just taken & pieced together from various guides I've found on the internet and internally at HashiCorp. Big thanks to Ranjan who shared [his own repository for Consul](https://github.com/Ranjandas/learn-consul-connect/tree/main/cloud-init/scripts) with me when he learned I was trying to set up something similar, saving several days of frustrating troubleshooting. 
+Most of this is just taken & pieced together from various guides I've found on the internet and internally at HashiCorp. Big thanks to Ranjan who shared [his own repository for Consul](https://github.com/Ranjandas/learn-consul-connect/tree/main/cloud-init/scripts) with me when he learned I was trying to set up something similar, saving several days of frustrating troubleshooting.
 
 ## Why Multipass & k3s?
 
@@ -14,7 +14,7 @@ Due to compatibility limitations on the Mac M1 chips I feel most common solution
 
 I found this setup to be the most straight forward method for spinning up multiple Vault clusters with Kubernetes and being able to access each via an IP address.
 
-Kubernetes is a grind to learn and can be daunting for newcommers. K3s is a lightweight, simple and production-ready implementation of Kubernetes that greatly reduces the complexity and allows you to focus on how the larger parts function and move together. 
+Kubernetes is a grind to learn and can be daunting for newcommers. K3s is a lightweight, simple and production-ready implementation of Kubernetes that greatly reduces the complexity and allows you to focus on how the larger parts function and move together.
 
 ## Architecture
 
@@ -76,4 +76,3 @@ K3s uses `sqlite` for storage instead of `etcd`, and also lacks other core featu
 `multipass list`
 `multipass delete <vm name> --purge`
 `multipass list`
-
