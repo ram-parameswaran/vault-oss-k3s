@@ -1,5 +1,5 @@
 saving here for now, WIP
-
+.
 # Vault with K3S & Multipass
 
 Most of this is just taken & pieced together from various guides I've found on the internet and internally at HashiCorp. Big thanks to Ranjan who shared [his own repository for Consul](https://github.com/Ranjandas/learn-consul-connect/tree/main/cloud-init/scripts) with me when he learned I was trying to set up something similar, saving several days of frustrating troubleshooting. 
