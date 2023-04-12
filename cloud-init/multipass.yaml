@@ -1,3 +1,9 @@
+packages:
+  - jq
+  - gpg
+  - tree
+  - unzip
+
 runcmd:
   - curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.24.7+k3s1 sh -
   - mkdir -p /home/ubuntu/.kube/
@@ -6,8 +12,8 @@ runcmd:
   - k3s completion bash > /etc/bash_completion.d/k3s
   - echo "export KUBECONFIG=/home/ubuntu/.kube/config" | tee -a /home/ubuntu/.bashrc
   - echo "alias k=\'kubectl\'" | tee -a /home/ubuntu/.bashrc
-  - sudo apt install jq -y
-  - sudo apt install gpg
+#  - sudo apt install jq -y
+#  - sudo apt install gpg
   - wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
   - echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
   - sudo apt update && sudo apt install vault
@@ -54,5 +60,24 @@ write_files:
   content: |
     <license here>
   owner: 'ubuntu:ubuntu'
-  permissions: '0400'
+  permissions: '0666'
+  defer: true
+- path: /home/ubuntu/write-license.sh
+  content: |
+    #!/bin/bash
+    read -p "Enter Vault license key: " VAULT_LICENSE
+    echo $VAULT_LICENSE > /home/ubuntu/license.hclic
+    SECRET=$(cat license.hclic); kubectl create secret generic vault-ent-license --from-literal="license=${SECRET}"
+    helm install vault hashicorp/vault --values vault-overrides.yaml
+    sleep 2
+    until [[ $VAULT_POD_STATE == "Running" ]]
+    do
+      VAULT_POD_STATE=$(kubectl get pod $MY_POD | awk 'FNR==2{printf $3}')
+      echo "Not running. Pod is currently: $VAULT_POD_STATE"
+      sleep 1
+    done
+    echo "Vault is ready, proceeding to unseal and init!"
+    kubectl exec vault-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > cluster-keys.json
+  owner: 'ubuntu:ubuntu'
+  permissions: '0755'
   defer: true
