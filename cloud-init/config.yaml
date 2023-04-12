@@ -71,8 +71,6 @@ write_files:
     sleep 2
     helm install vault hashicorp/vault --values vault-overrides.yaml
     printf "%s\n" "-------------------------------------------------------------------"
-    printf "Sleeping for 2 seconds while waiting for Helm chart to install with overrides...\n"
-    printf "%s\n" "-------------------------------------------------------------------"
     sleep 2
     until [[ $VAULT_POD_STATE == "Running" ]]
     do
@@ -89,7 +87,7 @@ write_files:
     export VAULT_ADDR=http://127.0.0.1:8200
     export VAULT_TOKEN=$(jq -r ".root_token" cluster-keys.json)
     printf "%s\n" "-------------------------------------------------------------------"
-    printf "Validating Vault status & root token lookup\n"
+    printf "Validating Vault status on 127.0.0.1 & root token lookup\n"
     printf "%s\n" "-------------------------------------------------------------------"
     vault status && printf "%s\n" "-------------------------------------------------------------------" && vault token lookup
   owner: 'ubuntu:ubuntu'
