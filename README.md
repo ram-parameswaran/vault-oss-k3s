@@ -1,8 +1,4 @@
-saving here for now, WIP
-
 # Vault with K3S & Multipass
-
-Most of this is just taken & pieced together from various guides I've found on the internet and internally at HashiCorp. Big thanks to Ranjan who shared [his own repository for Consul](https://github.com/Ranjandas/learn-consul-connect/tree/main/cloud-init/scripts) with me when he learned I was trying to set up something similar, saving several days of frustrating troubleshooting. 
 
 ## Why Multipass & k3s?
 
@@ -16,10 +12,6 @@ I found this setup to be the most straight forward method for spinning up multip
 
 Kubernetes is a grind to learn and can be daunting for newcommers. K3s is a lightweight, simple and production-ready implementation of Kubernetes that greatly reduces the complexity and allows you to focus on how the larger parts function and move together. 
 
-## Architecture
-
-Details of how the repo functions go here
-
 ## Prerequisites
 
 - [Multipass](https://multipass.run/)
@@ -32,29 +24,25 @@ Details of how the repo functions go here
 
 #### From your host machine
 
-`multipass launch -n <vm name> -m 4G -c 2 -d 10GB --cloud-init cloud-init/multipass.yaml`
+`multipass launch -n <vm name> -m 4G -c 2 -d 10GB --cloud-init cloud-init/config.yaml`
 
 `multipass shell <nm name>`
 
 #### From the VM
 
-Copy the overrides.yaml to the VM
+`./write-license.sh`
 
-`secret=$(cat license.hclic); k create secret generic vault-ent-license --from-literal="license=${secret}"`
-
-`helm install vault hashicorp/vault --values vault-overrides.yaml`
-
-```
-k exec vault-0 -- vault operator init \
-    -key-shares=1 \
-    -key-threshold=1 \
-    -format=json > cluster-keys.json
-```
+This script asks for & applies the license, launches Vault and its agent injector, and initialises Vault, storing your unseal key and root token in a newly generated `cluster-keys.json`.
 
 `VAULT_UNSEAL_KEY=$(jq -r ".unseal_keys_b64[]" cluster-keys.json)`
 
 `k exec vault-0 -- vault operator unseal $VAULT_UNSEAL_KEY`
 
+`export VAULT_ADDR=http://127.0.0.1:8200`
+
+`export VAULT_TOKEN=$(jq -r ".root_token" cluster-keys.json)`
+
+`vault status && vault token lookup`
 
 ## Cleanup
 
@@ -76,4 +64,3 @@ K3s uses `sqlite` for storage instead of `etcd`, and also lacks other core featu
 `multipass list`
 `multipass delete <vm name> --purge`
 `multipass list`
-
