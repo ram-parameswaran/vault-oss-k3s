@@ -34,9 +34,7 @@ Kubernetes is a grind to learn and can be daunting for newcommers. K3s is a ligh
 
 This script asks for & applies the license, launches Vault and its agent injector, and initialises Vault, storing your unseal key and root token in a newly generated `cluster-keys.json`.
 
-`VAULT_UNSEAL_KEY=$(jq -r ".unseal_keys_b64[]" cluster-keys.json)`
-
-`k exec vault-0 -- vault operator unseal $VAULT_UNSEAL_KEY`
+It then takes these values, unseals Vault, and runs a `vault status` & `vault token lookup` to validate that it has been successful.
 
 `export VAULT_ADDR=http://127.0.0.1:8200`
 
