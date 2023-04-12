@@ -24,9 +24,11 @@ Kubernetes is a grind to learn and can be daunting for newcommers. K3s is a ligh
 
 #### From your host machine
 
+`git clone https://github.com/conor-mccullough/vault-k3s.git && cd vault-k3s`
+
 `multipass launch -n <vm name> -m 4G -c 2 -d 10GB --cloud-init cloud-init/config.yaml`
 
-`multipass shell <nm name>`
+`multipass shell <vm name>`
 
 #### From the VM
 
