@@ -67,6 +67,7 @@ write_files:
     read -s VAULT_LICENSE
     echo $VAULT_LICENSE > /home/ubuntu/license.hclic
     SECRET=$(cat license.hclic); kubectl create secret generic vault-ent-license --from-literal="license=${SECRET}"
+  ##### Fix this when there's time----> export MY_POD=vault-0
     printf "%s\n" "-------------------------------------------------------------------"
     sleep 2
     helm install vault hashicorp/vault --values vault-overrides.yaml
