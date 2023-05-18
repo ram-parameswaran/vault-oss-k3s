@@ -36,6 +36,7 @@ write_files:
       image:
         repository: hashicorp/vault-enterprise
         tag: 1.13.1-ent
+      logLevel: "trace"
       enterpriseLicense:
         secretName: PLACEHOLDER_LICENSE
       affinity: ""
