@@ -2,15 +2,10 @@
 ~/vault-overrides.sh
 export PLACEHOLDER_VALUE="my-value"
 export PLACEHOLDER_ADDRESS="my-address"
-read -p "Enter Kubernetes secret key name for Vault license (NOT Vault License itself): " KUBES_SECRET
-printf "Enter Vault license key: \n"
-read -s VAULT_LICENSE
+
 IP_ADDR=$(ip a | grep enp0s1 | awk -v RS='([0-9]+\\.){3}[0-9]+' 'RT{print RT}' | head -n 1)
-echo $VAULT_LICENSE > /home/ubuntu/license.hclic
-SECRET=$(cat license.hclic); kubectl create secret generic $KUBES_SECRET --from-literal="license=${SECRET}"
 read -p "Enter Vault pod name: " VAULT_NAME
 
-sed -i "s/PLACEHOLDER_LICENSE/${KUBES_SECRET}/g" vault-overrides.yaml
 sed -i "s/PLACEHOLDER_VALUE/${VAULT_NAME}/g" vault-overrides.yaml
 sed -i "s/PLACEHOLDER_ADDRESS/${IP_ADDR}/g" vault-overrides.yaml
 

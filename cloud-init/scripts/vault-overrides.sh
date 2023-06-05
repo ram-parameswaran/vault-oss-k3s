@@ -3,10 +3,8 @@ touch vault-overrides.yaml
 tee vault-overrides.yaml << EOF
 server:
     image:
-    repository: hashicorp/vault-enterprise
-    tag: 1.13.1-ent
-    enterpriseLicense:
-    secretName: PLACEHOLDER_LICENSE
+    repository: hashicorp/vault
+    tag: 1.13.1
     affinity: ""
     ha:
     enabled: true

@@ -1,9 +1,7 @@
 server:
   image:
-    repository: hashicorp/vault-enterprise
-    tag: 1.12.1-ent
-  enterpriseLicense:
-    secretName: vault-ent-license
+    repository: hashicorp/vault
+    tag: 1.12.1
   affinity: ""
   ha:
     enabled: true

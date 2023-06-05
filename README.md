@@ -42,18 +42,14 @@ There is also a built-in and pre-installed load balancer out of the box for k3s,
 
 #### From the Multipass instance
 
-`write-license.sh` bootstraps Vault semi-automatically. This script asks for & applies the license, launches Vault and its agent injector, and initialises Vault, storing your unseal key and root token in a newly generated `cluster-keys.json`.
+`install-vault.sh` bootstraps Vault semi-automatically. This script launches Vault and its agent injector, and initialises Vault, storing your unseal key and root token in a newly generated `cluster-keys.json`.
 
 Helm values are generated and written to `vault-overrides.yaml` by the `vault-overrides.sh` script based off the input given.
 
 
 - Run the provisioning script:
 
-`./write-license.sh`
-
-- Enter the name for your Kubernetes secret, which Kubernetes will use to store your Vault license in.
-
-- Paste the Vault Enterprise license string. This prompt uses `read -s` to avoid printing to screen so don't panic when nothing pops up.
+`./install-vault.sh`
 
 - Enter the name for the pod on which we'll be running Vault.
 
@@ -101,8 +97,6 @@ Helm values are generated and written to `vault-overrides.yaml` by the `vault-ov
 - If it's up but broken, check the logs:
 
 `k logs <pod name>`
-
-Commonly you'll see issues with the license popping up at this stage, usually it's either a typo or an incorrectly pasted license string provided during the bootstrap script.
 
 - If it didn't reach a state where Vault was able to print logs, pull the pod event log:
 
