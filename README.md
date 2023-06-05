@@ -1,4 +1,4 @@
-# Vault with K3S & Multipass
+# Vault OSS with K3S & Multipass
 
 ## Why Multipass & k3s?
 
